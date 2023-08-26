@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: location
+  data:
+    r2dbc:
+      repositories:
+        enabled: true   
+  webflux:
+    base-path: /locations
+    
