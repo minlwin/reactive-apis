@@ -1,0 +1,13 @@
+version: '3.8'
+volumes:
+ flux_api_location_mongo:
+services:
+ mongodb:
+  image: mongo:latest
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: mongo
+   MONGO_INITDB_ROOT_PASSWORD: mongo
+  ports:
+   - 27017:27017
+  volumes:
+   - flux_api_location_mongo:/data/db
