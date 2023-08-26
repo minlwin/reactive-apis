@@ -1,5 +1,6 @@
 package com.jdc.flux.hello.api;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class DivisionApi {
 	}
 	
 	@PostMapping
-	Mono<Division> create(@RequestBody Division division) {
+	Mono<Division> create(@Validated @RequestBody Division division) {
 		return service.save(division);
 	}
 	
@@ -38,7 +39,7 @@ public class DivisionApi {
 	}
 	
 	@PutMapping("{id}")
-	Mono<Division> update(@PathVariable int id, @RequestBody Division division) {
+	Mono<Division> update(@PathVariable int id, @Validated @RequestBody Division division) {
 		return service.update(id, division);
 	}
 	

@@ -2,6 +2,7 @@ package com.jdc.flux.hello.api;
 
 import java.util.Optional;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class TownshipApi {
 	}
 	
 	@PostMapping
-	Mono<TownshipDto> create(@RequestBody Township data) {
+	Mono<TownshipDto> create(@Validated @RequestBody Township data) {
 		return service.save(data);
 	}
 	
@@ -41,7 +42,7 @@ public class TownshipApi {
 	}
 
 	@PutMapping("{id}")
-	Mono<TownshipDto> update(@PathVariable int id, @RequestBody Township data) {
+	Mono<TownshipDto> update(@PathVariable int id, @Validated @RequestBody Township data) {
 		return service.update(id, data);
 	}
 }
