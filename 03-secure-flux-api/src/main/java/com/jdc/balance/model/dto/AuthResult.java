@@ -1,10 +1,10 @@
 package com.jdc.balance.model.dto;
 
-import com.jdc.balance.model.consts.Role;
+import java.util.List;
 
 public record AuthResult(
 		String username,
-		Role role,
+		List<String> authorities,
 		String token
 		) {
 
