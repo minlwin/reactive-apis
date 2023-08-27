@@ -8,6 +8,6 @@ import reactor.core.publisher.Mono;
 
 public interface AccountRepo extends ReactiveMongoRepository<Account, String>{
 
-	Mono<Account> findOneBySignInUserName(String username);
+	Mono<Account> findOneBySignInUsername(String username);
 
 }
