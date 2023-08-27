@@ -1,0 +1,6 @@
+spring:
+  webflux:
+    base-path: /balances
+  data:
+    mongodb:
+      uri: mongodb://balanceusr:balancepwd@localhost:27017/balancedb
