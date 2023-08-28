@@ -1,6 +1,6 @@
 version: '3.8'
 volumes:
- secure_flux_api:
+ storage:
 services:
  mongodb:
   image: mongo:latest
@@ -11,5 +11,5 @@ services:
   ports:
    - 27017:27017
   volumes:
-   - secure_flux_api:/data/db
+   - storage:/data/db
    - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
