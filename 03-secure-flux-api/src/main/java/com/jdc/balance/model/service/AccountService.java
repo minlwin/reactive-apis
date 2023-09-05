@@ -1,13 +1,18 @@
 package com.jdc.balance.model.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jdc.balance.model.consts.Role;
+import com.jdc.balance.model.dto.AccountDto;
 import com.jdc.balance.model.entity.Account;
 import com.jdc.balance.model.form.SignUpForm;
 import com.jdc.balance.model.repo.AccountRepo;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -20,5 +25,15 @@ public class AccountService {
 	
 	public Mono<Account> signUpAccount(SignUpForm form) {
 		return repo.save(form.convert(encoder::encode));
+	}
+
+	public Flux<AccountDto> search(Optional<Role> role, Optional<String> keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Mono<AccountDto> findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
