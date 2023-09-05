@@ -2,6 +2,8 @@ package com.jdc.balance.model.form;
 
 import java.util.function.Function;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import com.jdc.balance.model.consts.Role;
 import com.jdc.balance.model.entity.Account;
 import com.jdc.balance.model.entity.SignInInfo;
@@ -19,5 +21,9 @@ public record SignUpForm(
 	
 	public Account convert(Function<String, String> passwordEncoder) {
 		return new Account(null, name, Role.Member, new SignInInfo(username, passwordEncoder.apply(password)), null);
+	}
+	
+	public UsernamePasswordAuthenticationToken token() {
+		return UsernamePasswordAuthenticationToken.unauthenticated(username, password);
 	}
 }

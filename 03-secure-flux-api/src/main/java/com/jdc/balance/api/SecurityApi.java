@@ -43,7 +43,7 @@ public class SecurityApi {
 	@PostMapping("signup")
 	Mono<AuthResult> signUp(@Validated @RequestBody SignUpForm form) {
 		return service.signUpAccount(form)
-				.map(account -> account.signIn().token())
+				.map(account -> form.token())
 				.flatMap(token -> authenticationManager.authenticate(token))
 				.filter(auth -> null != auth 
 					&& !(auth instanceof AnonymousAuthenticationToken) 

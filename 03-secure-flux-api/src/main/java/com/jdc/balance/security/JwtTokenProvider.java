@@ -49,15 +49,20 @@ public class JwtTokenProvider {
 	
 	public Authentication authenticate(String token) {
 		
-		if(StringUtils.hasLength(token) && token.startsWith(tokenPrefix)) {
-			var claims = Jwts.parserBuilder().requireIssuer(token).setSigningKey(key).build()
-				.parseClaimsJws(token);
+		try {
+			if(StringUtils.hasLength(token) && token.startsWith(tokenPrefix)) {
+				var claims = Jwts.parserBuilder().requireIssuer(issuer).setSigningKey(key).build()
+					.parseClaimsJws(token.substring(tokenPrefix.length() + 1));
+				
+				var username = claims.getBody().getSubject();
+				var rolString = claims.getBody().get("rol").toString();
+				var authorities =Arrays.stream(rolString.split(",")).map(SimpleGrantedAuthority::new).toList();
+				
+				return UsernamePasswordAuthenticationToken.authenticated(username, null, authorities);
+			}
 			
-			var username = claims.getBody().getSubject();
-			var rolString = claims.getBody().get("rol").toString();
-			var authorities =Arrays.stream(rolString.split(",")).map(SimpleGrantedAuthority::new).toList();
-			
-			return UsernamePasswordAuthenticationToken.authenticated(username, null, authorities);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return null;
