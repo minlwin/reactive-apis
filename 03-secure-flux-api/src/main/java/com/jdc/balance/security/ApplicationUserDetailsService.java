@@ -20,7 +20,7 @@ public class ApplicationUserDetailsService implements ReactiveUserDetailsService
 	public Mono<UserDetails> findByUsername(String username) {
 		return accountRepo.findOneBySignInUsername(username)
 				.map(a -> User.withUsername(username)
-						.roles(a.role().name())
+						.authorities(a.role().name())
 						.password(a.signIn().password())
 						.build());	
 	}

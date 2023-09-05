@@ -22,11 +22,11 @@ public class JwtTokenAuthenticationFilter implements WebFilter{
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		
-		var token = exchange.getRequest().getHeaders().getFirst(headerName);
-		var authentication = provider.authenticate(token);
+		var authentication = provider.authenticate(exchange.getRequest().getHeaders().getFirst(headerName));
 		
 		if(null != authentication) {
-			return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
+			return chain.filter(exchange)
+					.contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
 		}
 		
 		return chain.filter(exchange);
