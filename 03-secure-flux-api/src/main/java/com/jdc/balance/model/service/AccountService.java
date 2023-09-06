@@ -31,7 +31,7 @@ public class AccountService {
 
 	public Flux<AccountDto> search(Optional<Role> role, Optional<String> keyword) {
 		var criteria = role.map(value -> Criteria.where("role").is(value)).orElse(new Criteria())
-			.andOperator(keyword.map(value -> Criteria.where("name").regex("%s.*".formatted(value))).orElse(new Criteria()));
+			.andOperator(keyword.map(value -> Criteria.where("name").regex("%s.*".formatted(value), "i")).orElse(new Criteria()));
 		return repo.select(Query.query(criteria)).map(AccountDto::from);
 	}
 
