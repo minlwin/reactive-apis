@@ -1,9 +1,10 @@
 package com.jdc.balance.model.service;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,10 @@ public class AccountService {
 	}
 
 	public Flux<AccountDto> search(Optional<Role> role, Optional<String> keyword) {
-		var criteria = role.map(value -> Criteria.where("role").is(value)).orElse(new Criteria())
-			.andOperator(keyword.map(value -> Criteria.where("name").regex("%s.*".formatted(value), "i")).orElse(new Criteria()));
+		var criteria = role.map(
+				value -> where("role").is(value)).orElse(where(null)).andOperator(
+						keyword.map(value -> where("name").regex("%s.*".formatted(value), "i"))
+						.orElse(where(null)));
 		return repo.select(Query.query(criteria)).map(AccountDto::from);
 	}
 
